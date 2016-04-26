@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="../../common/js/react.js"></script>
+    <script src="../../common/js/react-dom.js"></script>
+    <script src="../../common/js/browser.min.js"></script>
+  </head>
+  <body>
+    <div id="select"></div>
+    <br><br><br>
+    <div id="img"></div>
+
+
+    <script type="text/babel">
+
+      var MyComponent = React.createClass({
+        handleClick: function(event) {
+          var inputValue = this.refs.myTextInput.value;
+          this.props.handleClick(inputValue)
+        },
+        render: function() {
+          return (
+            <div>
+              <p>输入值: {this.props.text}</p>
+              <input type="text" ref="myTextInput" />
+              <input type="button" value="button" onClick={this.handleClick} />
+            </div>
+          );
+        }
+      });
+
+
+      var Imgs = React.createClass({
+        render: function  () {
+          var id = this.props.text;
+          var src = "http://work.alibaba-inc.com/photo/" + id+ ".jpg"
+          return (
+            <div><img src={src} /></div>
+          );
+        }
+      });
+
+
+
+      var Container = React.createClass({
+        getInitialState: function () {
+          return {text: "", img: "042129"}
+        },
+
+        handleClick: function (inputValue) {
+          this.setState({text: inputValue, img: inputValue});
+        },
+
+        render: function () {
+          return (
+            <div>
+              <div>Container-Comment</div>
+              <MyComponent handleClick={this.handleClick} text={this.state.text}/>
+              <br/><br/><br/><br/>
+              <Imgs text={this.state.img} />
+            </div>
+  
+          )
+        }
+      })
+
+      ReactDOM.render( < Container />, document.getElementById('select'))
+
+    </script>
+  </body>
+</html>
+
+
+
+
+

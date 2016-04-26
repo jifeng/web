@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="../../common/js/react.js"></script>
+    <script src="../../common/js/react-dom.js"></script>
+    <script src="../../common/js/browser.min.js"></script>
+    <script src="../../common/js/pubsub.js"></script>
+  </head>
+  <body>
+    <div id="select"></div>
+    <br><br><br>
+    <div id="img"></div>
+    <script type="text/babel">
+      const MESSAGE = 'Click';
+      var MyComponent = React.createClass({
+        getInitialState: function () {
+          return {text: ""}
+        },
+        componentDidMount: function () {
+          // 订阅
+          PubSub.subscribe(MESSAGE, this.change);
+        },
+
+        change: function (id) {
+          this.setState({text: id});
+        },
+        handleClick: function(event) {
+          var inputValue = this.refs.myTextInput.value;
+          //触发
+          PubSub.publish(MESSAGE, inputValue);
+        },
+        render: function() {
+          return (
+            <div>
+              <p>输入值: {this.state.text}</p>
+              <input type="text" ref="myTextInput" />
+              <input type="button" value="button" onClick={this.handleClick} />
+            </div>
+          );
+        }
+      });
+
+
+      var Imgs = React.createClass({
+        getInitialState: function () {
+          return { text: "" }
+        },
+        componentDidMount: function () {
+          // 订阅
+          PubSub.subscribe(MESSAGE, this.change);
+        },
+        change: function (id) {
+          this.setState({text: id});
+        },
+        render: function  () {
+          var id = this.state.text;
+          var src = "http://work.alibaba-inc.com/photo/" + id+ ".jpg"
+          return (
+            <div><img src={src} /></div>
+          );
+        }
+      });
+
+     ReactDOM.render( < MyComponent />, document.getElementById('select'))
+     ReactDOM.render( < Imgs />, document.getElementById('img'))
+    </script>
+  </body>
+</html>
