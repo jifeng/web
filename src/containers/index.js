@@ -1,12 +1,11 @@
-//引入本初包
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { createStore } from 'redux'
 
 //React组件
-import Counter from './components/Counter'
+import Counter from '../components/Counter'
 
-import counter from './reducers'
+import counter from '../reducers'
 
 const store = createStore(counter)
 
@@ -25,3 +24,4 @@ function render() {
 
 render()
 store.subscribe(render)
+
